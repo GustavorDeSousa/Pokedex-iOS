@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B18ACC9626813A53006FAB76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ACC9526813A53006FAB76 /* AppDelegate.swift */; };
 		B18ACC9826813A53006FAB76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ACC9726813A53006FAB76 /* SceneDelegate.swift */; };
-		B18ACC9A26813A53006FAB76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18ACC9926813A53006FAB76 /* ViewController.swift */; };
 		B18ACC9D26813A53006FAB76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18ACC9B26813A53006FAB76 /* Main.storyboard */; };
 		B18ACC9F26813A54006FAB76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B18ACC9E26813A54006FAB76 /* Assets.xcassets */; };
 		B18ACCA226813A54006FAB76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18ACCA026813A54006FAB76 /* LaunchScreen.storyboard */; };
@@ -44,7 +43,6 @@
 		B18ACC9226813A53006FAB76 /* PokemonList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B18ACC9526813A53006FAB76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B18ACC9726813A53006FAB76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B18ACC9926813A53006FAB76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B18ACC9C26813A53006FAB76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B18ACC9E26813A54006FAB76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B18ACCA126813A54006FAB76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -111,13 +109,8 @@
 		B18ACC9426813A53006FAB76 /* PokemonList */ = {
 			isa = PBXGroup;
 			children = (
+				B18ACCD726813C77006FAB76 /* Config */,
 				B18ACCC526813A72006FAB76 /* Scenes */,
-				B18ACC9526813A53006FAB76 /* AppDelegate.swift */,
-				B18ACC9726813A53006FAB76 /* SceneDelegate.swift */,
-				B18ACC9926813A53006FAB76 /* ViewController.swift */,
-				B18ACC9B26813A53006FAB76 /* Main.storyboard */,
-				B18ACC9E26813A54006FAB76 /* Assets.xcassets */,
-				B18ACCA026813A54006FAB76 /* LaunchScreen.storyboard */,
 				B18ACCA326813A54006FAB76 /* Info.plist */,
 			);
 			path = PokemonList;
@@ -145,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				B18ACCC626813A7D006FAB76 /* ListPokemons */,
+				B18ACCD626813C68006FAB76 /* LaunchScreen */,
+				B18ACCD526813C5A006FAB76 /* Main */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -160,6 +155,32 @@
 				B18ACCCC26813A8B006FAB76 /* ListPokemonsService.swift */,
 			);
 			path = ListPokemons;
+			sourceTree = "<group>";
+		};
+		B18ACCD526813C5A006FAB76 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B18ACC9B26813A53006FAB76 /* Main.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B18ACCD626813C68006FAB76 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B18ACCA026813A54006FAB76 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		B18ACCD726813C77006FAB76 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				B18ACC9E26813A54006FAB76 /* Assets.xcassets */,
+				B18ACC9526813A53006FAB76 /* AppDelegate.swift */,
+				B18ACC9726813A53006FAB76 /* SceneDelegate.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,7 +316,6 @@
 				B18ACCD026813A8B006FAB76 /* ListPokemonsViewController.swift in Sources */,
 				B18ACCCD26813A8B006FAB76 /* ListPokemonsCoordinator.swift in Sources */,
 				B18ACCD126813A8B006FAB76 /* ListPokemonsInteractor.swift in Sources */,
-				B18ACC9A26813A53006FAB76 /* ViewController.swift in Sources */,
 				B18ACC9626813A53006FAB76 /* AppDelegate.swift in Sources */,
 				B18ACCCE26813A8B006FAB76 /* ListPokemonsFactory.swift in Sources */,
 				B18ACCCF26813A8B006FAB76 /* ListPokemonsPresenter.swift in Sources */,
