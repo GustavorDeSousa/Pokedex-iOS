@@ -1,0 +1,6 @@
+framework module Pods_PokemonList_PokemonListUITests {
+  umbrella header "Pods-PokemonList-PokemonListUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,13 +1,16 @@
 import Foundation
 
 protocol ListPokemonsInteracting: AnyObject {
-    func doSomething()
+    func getServicePokedex()
+    func getPokedex() -> PokedexObject
 }
 
 final class ListPokemonsInteractor {
     private let service: ListPokemonsServicing
     private let presenter: ListPokemonsPresenting
-
+    
+    var pokedexList: PokedexObject?
+    
     init(service: ListPokemonsServicing, presenter: ListPokemonsPresenting) {
         self.service = service
         self.presenter = presenter
@@ -16,7 +19,14 @@ final class ListPokemonsInteractor {
 
 // MARK: - ListPokemonsInteracting
 extension ListPokemonsInteractor: ListPokemonsInteracting {
-    func doSomething() {
-        presenter.displaySomething()
+    func getPokedex() -> PokedexObject {
+        return pokedexList ?? PokedexObject(pokemons: [])
+    }
+    
+    func getServicePokedex() {
+        service.getPokedex { result in
+            self.pokedexList = result
+            self.presenter.updateListPokedex()
+        }
     }
 }

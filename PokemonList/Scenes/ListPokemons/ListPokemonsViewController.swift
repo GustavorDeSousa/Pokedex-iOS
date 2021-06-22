@@ -1,19 +1,19 @@
 import UIKit
 
 protocol ListPokemonsDisplaying: AnyObject {
-    func displaySomething()
+    func updateListPokedex()
 }
 
 private extension ListPokemonsViewController.Layout {
-    //example
     enum Size {
-        static let imageHeight: CGFloat = 90.0
+        static let cellHeight: CGFloat = 150.0
     }
 }
 
 final class ListPokemonsViewController: UIViewController {
     fileprivate enum Layout { }
 
+    private let screenView = ListPokemonsView()
     private let interactor: ListPokemonsInteracting
 
     public init(interactor: ListPokemonsInteracting) {
@@ -27,19 +27,76 @@ final class ListPokemonsViewController: UIViewController {
     }
     
     override func loadView() {
-        let otherView = UIView()
-        otherView.backgroundColor = .red
-        view = otherView
+        view = screenView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        interactor.doSomething()
+        setup()
+        interactor.getServicePokedex()
+    }
+    
+    private func setup() {
+        setupCollection()
+        setupNavigation()
+    }
+    
+    private func setupNavigation() {
+        title = "Pokédex"
+    }
+    
+    private func setupCollection() {
+        screenView.pokemonListCollectionView.delegate = self
+        screenView.pokemonListCollectionView.dataSource = self
     }
 }
 
 // MARK: - ListPokemonsDisplaying
 extension ListPokemonsViewController: ListPokemonsDisplaying {
-    func displaySomething() { }
+    func updateListPokedex() {
+        DispatchQueue.main.async {
+            self.screenView.pokemonListCollectionView.reloadData()
+        }
+    }
+}
+
+extension ListPokemonsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        interactor.getPokedex().pokemons.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: ItemPokemolCollectionViewCell.self),
+                for: indexPath
+        ) as? ItemPokemolCollectionViewCell else { return UICollectionViewCell()}
+        cell.setup(pokemon: interactor.getPokedex().pokemons[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
+
+extension ListPokemonsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let size = (collectionView.bounds.width / 2)
+        return CGSize(width: size, height: Layout.Size.cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    { 0 }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    { 0 }
 }
