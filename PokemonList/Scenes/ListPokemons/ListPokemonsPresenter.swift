@@ -2,7 +2,7 @@ import Foundation
 
 protocol ListPokemonsPresenting: AnyObject {
     var viewController: ListPokemonsDisplaying? { get set }
-    func updateListPokedex()
+    func updateListPokedex(_ pokemon: PokedexObject)
 }
 
 final class ListPokemonsPresenter {
@@ -16,7 +16,7 @@ final class ListPokemonsPresenter {
 
 // MARK: - ListPokemonsPresenting
 extension ListPokemonsPresenter: ListPokemonsPresenting {
-    func updateListPokedex() {
-        viewController?.updateListPokedex()
+    func updateListPokedex(_ pokemon: PokedexObject) {
+        viewController?.updateListPokedex(pokemon)
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ListPokemonsServicing {
-    func getPokedex(success: @escaping(PokedexObject) -> Void)
+    func getPokedex(completion: @escaping(Result<PokedexObject, Error>) -> Void)
 }
 
 final class ListPokemonsService {
@@ -19,27 +19,38 @@ final class ListPokemonsService {
 
 // MARK: - ListPokemonsServicing
 extension ListPokemonsService: ListPokemonsServicing {
-    func getPokedex(success: @escaping(PokedexObject) -> Void) {
-        guard let url = URL(string: "https://private-a14951-pokedex3.apiary-mock.com/pokedex") else { return }
+    func getPokedex(completion: @escaping(Result<PokedexObject, Error>) -> Void) {
+        guard let url = URL(string: "https://private-a14951-pokedex3.apiary-mock.com/pokedex") else {
+            completion(.failure(API_ERROR.invaliURL))
+            return
+        }
         let dataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, erro: Error?) in
             if erro == nil {
-                guard let response = response as? HTTPURLResponse else { return }
+                guard let response = response as? HTTPURLResponse else {
+                    completion(.failure(API_ERROR.invaliURL))
+                    return
+                }
                 if response.statusCode == 200 {
                     guard let data = data else { return }
                     do {
-                        let products = try JSONDecoder().decode(PokedexObject.self, from: data)
-                        success(products)
-
+                        let pokedex = try JSONDecoder().decode(PokedexObject.self, from: data)
+                        completion(.success(pokedex))
                     } catch {
-                        print(error.localizedDescription)
+                        completion(.failure(API_ERROR.invaliData))
                     }
                 } else {
-                    print("Algum status invalido")
+                    completion(.failure(API_ERROR.invaliData))
                 }
             } else {
-                print(erro!)
+                completion(.failure(API_ERROR.invaliData))
             }
         }
         dataTask.resume()
     }
+}
+
+enum API_ERROR: Error {
+    case invaliData
+    case invaliURL
+    case invaliHTTP
 }

@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 private extension ItemPokemolCollectionViewCell.Layout {
@@ -140,13 +141,11 @@ extension ItemPokemolCollectionViewCell {
     func uploadImage(url: String) {
         guard let url = URL(string: url) else { return }
         dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            do {
-                guard let data = data else { return }
-                let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    self.imagePokemon.image = image
-                }
-            } catch _ {}
+            guard let data = data else { return }
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                self.imagePokemon.image = image
+            }
         }
         dataTask?.resume()
     }

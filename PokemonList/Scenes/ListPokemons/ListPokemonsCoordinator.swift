@@ -10,9 +10,6 @@ protocol ListPokemonsCoordinating: AnyObject {
 
 final class ListPokemonsCoordinator {
     weak var viewController: UIViewController?
-
-    init() {
-    }
 }
 
 // MARK: - ListPokemonsCoordinating

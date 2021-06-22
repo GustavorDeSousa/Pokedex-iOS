@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ListPokemonsDisplaying: AnyObject {
-    func updateListPokedex()
+    func updateListPokedex(_ pokemon: PokedexObject)
 }
 
 private extension ListPokemonsViewController.Layout {
@@ -15,9 +15,11 @@ final class ListPokemonsViewController: UIViewController {
 
     private let screenView = ListPokemonsView()
     private let interactor: ListPokemonsInteracting
+    private var pokedexList: PokedexObject
 
     public init(interactor: ListPokemonsInteracting) {
         self.interactor = interactor
+        self.pokedexList = PokedexObject(pokemons: [])
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,17 +34,13 @@ final class ListPokemonsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Pokédex"
         setup()
         interactor.getServicePokedex()
     }
     
     private func setup() {
         setupCollection()
-        setupNavigation()
-    }
-    
-    private func setupNavigation() {
-        title = "Pokédex"
     }
     
     private func setupCollection() {
@@ -53,7 +51,8 @@ final class ListPokemonsViewController: UIViewController {
 
 // MARK: - ListPokemonsDisplaying
 extension ListPokemonsViewController: ListPokemonsDisplaying {
-    func updateListPokedex() {
+    func updateListPokedex(_ pokemon: PokedexObject) {
+        pokedexList = pokemon
         DispatchQueue.main.async {
             self.screenView.pokemonListCollectionView.reloadData()
         }
@@ -62,7 +61,7 @@ extension ListPokemonsViewController: ListPokemonsDisplaying {
 
 extension ListPokemonsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        interactor.getPokedex().pokemons.count
+        pokedexList.pokemons.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -72,7 +71,7 @@ extension ListPokemonsViewController: UICollectionViewDelegate, UICollectionView
                 withReuseIdentifier: String(describing: ItemPokemolCollectionViewCell.self),
                 for: indexPath
         ) as? ItemPokemolCollectionViewCell else { return UICollectionViewCell()}
-        cell.setup(pokemon: interactor.getPokedex().pokemons[indexPath.row])
+        cell.setup(pokemon: pokedexList.pokemons[indexPath.row])
         return cell
     }
     
