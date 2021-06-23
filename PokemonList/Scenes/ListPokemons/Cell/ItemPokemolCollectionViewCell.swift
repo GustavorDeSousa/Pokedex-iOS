@@ -7,7 +7,6 @@ private extension ItemPokemolCollectionViewCell.Layout {
         static let medium: CGFloat = 12.0
         static let big: CGFloat = 18.0
         static let bigx: CGFloat = 24.0
-
     }
     
     enum Height {
@@ -43,7 +42,7 @@ class ItemPokemolCollectionViewCell: UICollectionViewCell {
     private lazy var codePokemon: UILabel = {
         let label = UILabel()
         label.text = "#000"
-        label.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.4355472922, green: 0.4324404597, blue: 0.4379293621, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 12.0)
         label.minimumScaleFactor = 0.5
         return label
@@ -136,6 +135,14 @@ extension ItemPokemolCollectionViewCell {
         }
         
         uploadImage(url: pokemon.image)
+        setupColor(pokemon)
+    }
+    
+    func setupColor(_ pokemon: Pokedex) {
+        let background = ColorUI.color(pokemon.firstType).withAlphaComponent(0.6)
+        containerView.backgroundColor = background
+        firstTypePokemonView.backgroundColor = ColorUI.color(pokemon.firstType)
+        secondTypePokemonView.backgroundColor = ColorUI.color(pokemon.secondType ?? ColorUI.empty)
     }
     
     func uploadImage(url: String) {
