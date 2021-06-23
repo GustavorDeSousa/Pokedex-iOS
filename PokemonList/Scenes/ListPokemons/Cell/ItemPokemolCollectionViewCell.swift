@@ -103,6 +103,8 @@ class ItemPokemolCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    
     private var dataTask: URLSessionTask?
     
     override init(frame: CGRect) {
@@ -123,6 +125,8 @@ class ItemPokemolCollectionViewCell: UICollectionViewCell {
 private
 extension ItemPokemolCollectionViewCell {
     func setupsInfos(_ pokemon: Pokedex) {
+        spinner.startAnimating()
+        
         namePokemon.text = pokemon.name
         codePokemon.text = pokemon.number
         firstPokemonLabel.text = pokemon.firstType
@@ -151,6 +155,7 @@ extension ItemPokemolCollectionViewCell {
             guard let data = data else { return }
             let image = UIImage(data: data)
             DispatchQueue.main.async {
+                self.spinner.stopAnimating()
                 self.imagePokemon.image = image
             }
         }
@@ -175,6 +180,8 @@ extension ItemPokemolCollectionViewCell {
         [firstTypePokemonView, secondTypePokemonView].forEach { component in
             typePokemonStackView.addArrangedSubview(component)
         }
+        
+        containerView.addSubview(spinner)
     }
     
     func addConstraints() {
@@ -224,6 +231,10 @@ extension ItemPokemolCollectionViewCell {
         
         secondTypePokemonView.snp.makeConstraints { make in
             make.height.equalTo(20)
+        }
+        
+        spinner.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
         }
     }
 }
